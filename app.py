@@ -27,14 +27,18 @@ def statistiques_produits():
     series_prix = df["price"]
     stats = series_prix.describe().to_dict()
 
-    resultat = {
-        "total_produits": int(stats["count"]),
-        "prix_moyen": round(stats["mean"], 2),
-        "prix_min": stats["min"],
-        "prix_max": stats["max"],
-        "apercu_colonnes": list(df.columns)
-    }
 
+    resultat = {
+    "total_produits": int(stats["count"]),
+    "prix_moyen": round(stats["mean"], 2),
+    "prix_min": stats["min"],
+    "prix_max": stats["max"],
+    "apercu_colonnes": list(df.columns),
+
+    # Informations provenant du fichier JSON local
+    "total_produits_locaux": len(df_local),
+    "produits_locaux": df_local.to_dict(orient="records")
+}
     return jsonify(resultat)
 
 if __name__ == "__main__":
